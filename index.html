@@ -278,7 +278,7 @@
 <body>
 
     <!-- Audio background music -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" autoplay muted loop>
         <source src="bg/bg.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -328,8 +328,8 @@
         function startMusic() {
             if (!musicStarted) {
                 bgMusic.currentTime = 9;
-                bgMusic.play().catch(error => {
-                    console.log('Audio play failed:', error);
+                bgMusic.play().then(() => {
+                    bgMusic.muted = false;
                 });
                 musicStarted = true;
                 // Remove this listener after music starts
