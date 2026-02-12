@@ -329,17 +329,21 @@
         function startMusic() {
             if (!musicStarted) {
                 bgMusic.currentTime = 9;
-                bgMusic.play();
+                bgMusic.play().catch(error => {
+                    console.log('Audio play failed:', error);
+                });
                 musicStarted = true;
                 // Remove this listener after music starts
                 document.removeEventListener('click', startMusic);
                 document.removeEventListener('mousemove', startMusic);
+                document.removeEventListener('touchstart', startMusic);
             }
         }
 
         // Start music on first interaction
         document.addEventListener('click', startMusic);
         document.addEventListener('mousemove', startMusic);
+        document.addEventListener('touchstart', startMusic);
 
         const container = document.getElementById("three-container");
 
