@@ -21,9 +21,7 @@
             height: 500px;
             margin: 40px auto;
             border-radius: 50%;
-            /* Quan trọng */
             overflow: hidden;
-            /* Cắt phần dư */
             background: radial-gradient(circle, #ff2e88 0%, #2b0035 70%);
             box-shadow:
                 0 0 40px rgba(255, 0, 120, 0.5),
@@ -102,7 +100,6 @@
             background: #ff79a8;
         }
 
-        /* Modal lightbox */
         #imageModal {
             display: none;
             position: fixed;
@@ -274,7 +271,6 @@
             }
         }
 
-        /* Twinkle Stars */
         .star {
             position: fixed;
             pointer-events: none;
@@ -298,12 +294,82 @@
         .star.twinkling {
             animation: twinkle var(--duration) infinite;
         }
+
+        #cakeDialog {
+            display: flex;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.5s ease;
+        }
+
+        #cakeDialog.hidden {
+            display: none;
+        }
+
+        .cake-container {
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cake-image {
+            max-width: 500px;
+            max-height: 500px;
+            display: block;
+            position: absolute;
+        }
+
+        .blow-button {
+            padding: 15px 40px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #ff2e63, #ff4081);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 46, 99, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .blow-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 46, 99, 0.8);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Audio background music -->
     <audio id="bgMusic" loop>
         <source src="bg/bg.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -313,7 +379,17 @@
     <p class="subtitle">Người con gái anh yêu nhất 💕</p>
 
 
-    <!-- Modal để hiển thị ảnh to -->
+    <div id="cakeDialog">
+        <div class="cake-container">
+            <h2 style="color: #ff79c6; font-size: 30px; margin-bottom: 20px;">🎂 Thổi nến sinh nhật nào! 🎂</h2>
+            <div style="position: relative; width: 500px; height: 500px;">
+                <img id="cakeImage1" class="cake-image" src="img/cake1.png" alt="Cake 1" style="z-index: 2;">
+                <img id="cakeImage2" class="cake-image" src="img/cake2.png" alt="Cake 2" style="display: none; z-index: 1;">
+            </div>
+            <button id="blowButton" class="blow-button" onclick="blowCandles()">🎉 Thổi nến 🎉</button>
+        </div>
+    </div>
+
     <div id="imageModal">
         <span class="close-modal" onclick="closeModal()">&times;</span>
         <img id="modalImage" src="" alt="">
@@ -347,7 +423,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Play background music from 9 seconds on first user interaction
         const bgMusic = document.getElementById('bgMusic');
         let musicStarted = false;
 
@@ -379,7 +454,7 @@
         const radius = 12;
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
-        // ĐỔI MÀU NỀN Ở ĐÂY
+
         renderer.setClearColor(0x000000, 0);
 
         container.appendChild(renderer.domElement);
@@ -390,10 +465,7 @@
 
         scene.add(group);
 
-        // ====== Romantic Pink Background Sphere ======
 
-
-        // ====== Glow outer layer ======
         const glowSphere = new THREE.Mesh(
             new THREE.SphereGeometry(radius + 0.8, 64, 64),
             new THREE.MeshBasicMaterial({
@@ -408,26 +480,22 @@
 
         const loader = new THREE.TextureLoader();
 
-        // Raycaster cho click detection
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         const meshes = [];
         let hoveredMesh = null;
 
-        // Tải danh sách ảnh từ manifest.json
         fetch('img/manifest.json')
             .then(response => response.json())
             .then(data => {
                 const imagePaths = data.images;
 
                 imagePaths.forEach((path, i) => {
-                    // Load texture with callback để lấy kích thước ảnh
                     const texture = loader.load(path, function(texture) {
-                        // Tính toán tỉ lệ khung hình của ảnh
                         const image = texture.image;
                         const aspectRatio = image.width / image.height;
                         
-                        // Cập nhật geometry dựa trên tỉ lệ khung hình
+
                         const baseHeight = 2;
                         const baseWidth = baseHeight * aspectRatio;
                         
@@ -444,16 +512,13 @@
                     const geometry = new THREE.PlaneGeometry(3, 2);
                     const mesh = new THREE.Mesh(geometry, material);
 
-                    // Lưu đường dẫn ảnh vào mesh
                     mesh.userData.imagePath = path;
 
-                    // Phân bố ảnh trên cầu
-                    const phi = Math.acos(-1 + (2 * i) / imagePaths.length);
+                    const phi = Math.acos(1 - (2 * i) / imagePaths.length);
                     const theta = Math.sqrt(imagePaths.length * Math.PI) * phi;
 
                     mesh.position.setFromSphericalCoords(radius, phi, theta);
 
-                    // Hướng ảnh ra ngoài
                     mesh.lookAt(0, 0, 0);
 
                     group.add(mesh);
@@ -462,7 +527,6 @@
 
                 function animate() {
                     requestAnimationFrame(animate);
-                    // Chỉ quay nếu không có ảnh nào được hover
                     if (!hoveredMesh) {
                         group.rotation.y += 0.003;
                     }
@@ -473,12 +537,10 @@
             })
             .catch(error => console.error('Lỗi tải ảnh:', error));
 
-        // Mousemove handler cho hover effect
         window.addEventListener('mousemove', (event) => {
             const canvas = renderer.domElement;
             const rect = canvas.getBoundingClientRect();
 
-            // Tính toán mouse coordinates dựa trên vị trí của canvas
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
@@ -488,19 +550,15 @@
             if (intersects.length > 0) {
                 const newHoveredMesh = intersects[0].object;
 
-                // Nếu hover vào ảnh khác
                 if (hoveredMesh !== newHoveredMesh) {
-                    // Reset ảnh cũ
                     if (hoveredMesh) {
                         hoveredMesh.scale.set(1, 1, 1);
                     }
 
-                    // Phóng to ảnh mới
                     hoveredMesh = newHoveredMesh;
                     hoveredMesh.scale.set(1.3, 1.3, 1.3);
                 }
             } else {
-                // Không hover vào ảnh nào
                 if (hoveredMesh) {
                     hoveredMesh.scale.set(1, 1, 1);
                     hoveredMesh = null;
@@ -508,12 +566,10 @@
             }
         });
 
-        // Click handler cho ảnh
         window.addEventListener('click', (event) => {
             const canvas = renderer.domElement;
             const rect = canvas.getBoundingClientRect();
 
-            // Tính toán mouse coordinates dựa trên vị trí của canvas
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
@@ -526,7 +582,6 @@
             }
         });
 
-        // Modal functions
         function openModal(imagePath) {
             const modal = document.getElementById('imageModal');
             const img = document.getElementById('modalImage');
@@ -539,31 +594,27 @@
             modal.classList.remove('active');
         }
 
-        // Đóng modal khi click bên ngoài ảnh
         document.getElementById('imageModal').addEventListener('click', (event) => {
             if (event.target.id === 'imageModal') {
                 closeModal();
             }
         });
 
-        // VIDEO SLIDER
         let currentIndex = 0;
         const slider = document.getElementById("videoSlider");
         let totalVideos = 0;
 
-        // Tải danh sách video từ manifest.json
         fetch('vid/manifest.json')
             .then(response => response.json())
             .then(data => {
                 const videos = data.videos;
                 totalVideos = videos.length;
 
-                // Tạo các thẻ video động
+
                 videos.forEach((videoPath, index) => {
                     const video = document.createElement('video');
                     video.src = videoPath;
                     video.controls = true;
-                    // Thêm class active cho video đầu tiên
                     if (index === 0) {
                         video.classList.add('active');
                     }
@@ -577,12 +628,12 @@
             videos.forEach((video, index) => {
                 if (index === currentIndex) {
                     video.classList.add('active');
-                    video.currentTime = 0; // Reset video về đầu
-                    video.play(); // Chạy video
+                    video.currentTime = 0;
+                    video.play();
                 } else {
                     video.classList.remove('active');
-                    video.pause(); // Dừng video
-                    video.currentTime = 0; // Reset video về đầu
+                    video.pause();
+                    video.currentTime = 0;
                 }
             });
         }
@@ -606,8 +657,6 @@
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
         });
-        // ===== Random Floating Wishes =====
-        // ===== Floating Wishes Around Page =====
         const wishes = [
             "Chúc em một tuổi mới vui nhiều hơn nghĩ.",
             "Mong mọi điều tốt đẹp tìm đến em đúng lúc.",
@@ -625,7 +674,6 @@
             "Hy vọng năm sau mình vẫn ngồi cạnh nhau thế này."
         ];
 
-        // Fisher–Yates shuffle
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -639,7 +687,7 @@
 
         function getNextWish() {
             if (currentIndex1 >= wishes.length) {
-                shuffle(wishes); // hết thì shuffle lại
+                shuffle(wishes);
                 currentIndex1 = 0;
             }
             return wishes[currentIndex1++];
@@ -664,34 +712,46 @@
 
         setInterval(createFloatingWish, 1200);
 
-        // ===== Twinkle Stars =====
+        function blowCandles() {
+            const cakeImage1 = document.getElementById('cakeImage1');
+            const cakeImage2 = document.getElementById('cakeImage2');
+            const blowButton = document.getElementById('blowButton');
+            
+            cakeImage1.style.display = 'none';
+            cakeImage2.style.display = 'block';
+            blowButton.style.visibility = 'hidden';
+            
+            setTimeout(() => {
+                closeCakeDialog();
+            }, 3000);
+        }
+
+        function closeCakeDialog() {
+            const dialog = document.getElementById('cakeDialog');
+            dialog.classList.add('hidden');
+        }
+
         function createTwinkleStar() {
             const star = document.createElement("div");
             star.className = "star twinkling";
             
-            // Hàm thay đổi vị trí ngẫu nhiên
             function repositionStar() {
                 star.style.left = Math.random() * 100 + "vw";
                 star.style.top = Math.random() * 100 + "vh";
             }
             
-            // Set vị trí ban đầu
             repositionStar();
             
-            // Random duration (1-2.5 seconds)
             const duration = (Math.random() * 1.5 + 1) + "s";
             star.style.setProperty("--duration", duration);
             
-            // Random delay để các sao không đồng bộ
             star.style.animationDelay = Math.random() * 2 + "s";
             
             document.body.appendChild(star);
             
-            // Mỗi 3 giây random lại vị trí
             setInterval(repositionStar, 3000);
         }
 
-        // Tạo 30-50 sao ngẫu nhiên
         const starCount = Math.floor(Math.random() * 20) + 30;
         for (let i = 0; i < starCount; i++) {
             createTwinkleStar();
