@@ -327,7 +327,6 @@
 
         function startMusic() {
             if (!musicStarted) {
-                bgMusic.currentTime = 9;
                 bgMusic.play().then(() => {
                     musicStarted = true;
                     document.removeEventListener('click', startMusic);
