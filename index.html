@@ -278,7 +278,7 @@
 <body>
 
     <!-- Audio background music -->
-    <audio id="bgMusic" autoplay muted loop>
+    <audio id="bgMusic" loop>
         <source src="bg/bg.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -329,19 +329,16 @@
             if (!musicStarted) {
                 bgMusic.currentTime = 9;
                 bgMusic.play().then(() => {
-                    bgMusic.muted = false;
+                    musicStarted = true;
+                    document.removeEventListener('click', startMusic);
+                    document.removeEventListener('touchstart', startMusic);
+                }).catch(error => {
+                    console.log('Audio play failed:', error);
                 });
-                musicStarted = true;
-                // Remove this listener after music starts
-                document.removeEventListener('click', startMusic);
-                document.removeEventListener('mousemove', startMusic);
-                document.removeEventListener('touchstart', startMusic);
             }
         }
 
-        // Start music on first interaction
         document.addEventListener('click', startMusic);
-        document.addEventListener('mousemove', startMusic);
         document.addEventListener('touchstart', startMusic);
 
         const container = document.getElementById("three-container");
