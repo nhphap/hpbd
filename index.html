@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #1a002b, #3a005f, #000000);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        #three-container {
+            width: 500px;
+            height: 500px;
+            margin: 40px auto;
+            border-radius: 50%;
+            /* Quan trọng */
+            overflow: hidden;
+            /* Cắt phần dư */
+            background: radial-gradient(circle, #ff2e88 0%, #2b0035 70%);
+            box-shadow:
+                0 0 40px rgba(255, 0, 120, 0.5),
+                0 0 80px rgba(255, 0, 150, 0.3);
+            border: 2px solid rgba(255, 150, 200, 0.4);
+        }
+
+        #three-container {
+            animation: glowPulse 4s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from {
+                box-shadow:
+                    0 0 40px rgba(255, 0, 120, 0.5),
+                    0 0 80px rgba(255, 0, 150, 0.3);
+            }
+
+            to {
+                box-shadow:
+                    0 0 60px rgba(255, 0, 150, 0.8),
+                    0 0 120px rgba(255, 0, 200, 0.6);
+            }
+        }
+
+        h1 {
+            margin: 30px 0;
+            font-size: 40px;
+            background: linear-gradient(90deg, #ff2e63, #08d9d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 50, 100, 0.6);
+            font-family: 'Dancing Script', cursive;
+        }
+
+
+        .video-section {
+            width: 25%;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .video-slider {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .video-slider video {
+            width: 100%;
+            flex-shrink: 0;
+            min-height: 300px;
+            display: none;
+        }
+
+        .video-slider video.active {
+            display: block;
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background: #ff4081;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #ff79a8;
+        }
+
+        /* Modal lightbox */
+        #imageModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        #imageModal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #imageModal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .close-modal:hover {
+            color: #ff4081;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            margin-top: -15px;
+            opacity: 0.8;
+        }
+
+        .message-section {
+            width: 60%;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(255, 0, 120, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(255, 0, 120, 0.3);
+        }
+
+        .message-section h2 {
+            color: #ff79c6;
+        }
+
+        .message-section p {
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        .floating-wish {
+            position: relative;
+            margin-top: -40px;
+            font-size: 18px;
+            color: #ffb6e6;
+            font-style: italic;
+            animation: fadeInOut 6s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        .extra-wishes {
+            margin: 40px auto;
+            width: 60%;
+            opacity: 0.85;
+        }
+
+        .extra-wishes p {
+            margin: 15px 0;
+            font-size: 17px;
+        }
+
+        .wish {
+            position: fixed;
+            bottom: -30px;
+            font-size: 16px;
+            color: #ffb6e6;
+            opacity: 0.9;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+
+        .floating-wish {
+            position: fixed;
+            bottom: -20px;
+            color: rgba(255, 182, 193, 0.9);
+            font-weight: 500;
+            pointer-events: none;
+            animation: floatUp 6s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Audio background music -->
+    <audio id="bgMusic" loop>
+        <source src="bg/bg.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <h1>Chúc Mừng Sinh Nhật Em ❤️</h1>
+    <p class="subtitle">Người con gái anh yêu nhất 💕</p>
+
+
+    <!-- Modal để hiển thị ảnh to -->
+    <div id="imageModal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="">
+    </div>
+
+    <div id="three-container"></div>
+    <div class="message-section">
+        <h2>💌 Gửi em...</h2>
+        <p>
+            Chúc cô gái của anh thêm một tuổi mới thật rực rỡ.
+            Hy vọng những ngày phía trước anh vẫn được quyền nắm tay em, được nhìn em cười và được ở cạnh em trong những
+            khoảnh khắc quan trọng nhất. ❤️
+        </p>
+    </div>
+    <div class="extra-wishes">
+        <p>🌸 Mong mỗi ngày của em đều có anh.</p>
+        <p>💗 Sinh nhật này có anh, sinh nhật sau vẫn là anh.</p>
+        <p>✨ Cảm ơn em đã làm cuộc sống anh dịu dàng hơn.</p>
+    </div>
+
+
+
+    <div class="video-section">
+        <div class="video-slider" id="videoSlider">
+        </div>
+        <div class="controls">
+            <button onclick="prevSlide()">Trước</button>
+            <button onclick="nextSlide()">Sau</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Play background music from 9 seconds on first user interaction
+        const bgMusic = document.getElementById('bgMusic');
+        let musicStarted = false;
+
+        function startMusic() {
+            if (!musicStarted) {
+                bgMusic.currentTime = 9;
+                bgMusic.play();
+                musicStarted = true;
+                // Remove this listener after music starts
+                document.removeEventListener('click', startMusic);
+                document.removeEventListener('mousemove', startMusic);
+            }
+        }
+
+        // Start music on first interaction
+        document.addEventListener('click', startMusic);
+        document.addEventListener('mousemove', startMusic);
+
+        const container = document.getElementById("three-container");
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+            75,
+            container.clientWidth / container.clientHeight,
+            0.1,
+            500
+        );
+
+        const radius = 12;
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        // ĐỔI MÀU NỀN Ở ĐÂY
+        renderer.setClearColor(0x000000, 0);
+
+        container.appendChild(renderer.domElement);
+
+        camera.position.z = 20;
+
+        const group = new THREE.Group();
+
+        scene.add(group);
+
+        // ====== Romantic Pink Background Sphere ======
+
+
+        // ====== Glow outer layer ======
+        const glowSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(radius + 0.8, 64, 64),
+            new THREE.MeshBasicMaterial({
+                color: 0xff2e88,
+                transparent: true,
+                opacity: 0.15
+            })
+        );
+
+        group.add(glowSphere);
+
+
+        const loader = new THREE.TextureLoader();
+
+        // Raycaster cho click detection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        const meshes = [];
+        let hoveredMesh = null;
+
+        // Tải danh sách ảnh từ manifest.json
+        fetch('img/manifest.json')
+            .then(response => response.json())
+            .then(data => {
+                const imagePaths = data.images;
+
+                imagePaths.forEach((path, i) => {
+                    const texture = loader.load(path);
+                    const material = new THREE.MeshBasicMaterial({
+                        map: texture,
+                        side: THREE.DoubleSide
+                    });
+
+                    const geometry = new THREE.PlaneGeometry(3, 2);
+                    const mesh = new THREE.Mesh(geometry, material);
+
+                    // Lưu đường dẫn ảnh vào mesh
+                    mesh.userData.imagePath = path;
+
+                    // Phân bố ảnh trên cầu
+                    const phi = Math.acos(-1 + (2 * i) / imagePaths.length);
+                    const theta = Math.sqrt(imagePaths.length * Math.PI) * phi;
+
+                    mesh.position.setFromSphericalCoords(radius, phi, theta);
+
+                    // Hướng ảnh ra ngoài
+                    mesh.lookAt(0, 0, 0);
+
+                    group.add(mesh);
+                    meshes.push(mesh);
+                });
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    // Chỉ quay nếu không có ảnh nào được hover
+                    if (!hoveredMesh) {
+                        group.rotation.y += 0.002;
+                    }
+                    renderer.render(scene, camera);
+                }
+
+                animate();
+            })
+            .catch(error => console.error('Lỗi tải ảnh:', error));
+
+        // Mousemove handler cho hover effect
+        window.addEventListener('mousemove', (event) => {
+            const canvas = renderer.domElement;
+            const rect = canvas.getBoundingClientRect();
+
+            // Tính toán mouse coordinates dựa trên vị trí của canvas
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(meshes);
+
+            if (intersects.length > 0) {
+                const newHoveredMesh = intersects[0].object;
+
+                // Nếu hover vào ảnh khác
+                if (hoveredMesh !== newHoveredMesh) {
+                    // Reset ảnh cũ
+                    if (hoveredMesh) {
+                        hoveredMesh.scale.set(1, 1, 1);
+                    }
+
+                    // Phóng to ảnh mới
+                    hoveredMesh = newHoveredMesh;
+                    hoveredMesh.scale.set(1.3, 1.3, 1.3);
+                }
+            } else {
+                // Không hover vào ảnh nào
+                if (hoveredMesh) {
+                    hoveredMesh.scale.set(1, 1, 1);
+                    hoveredMesh = null;
+                }
+            }
+        });
+
+        // Click handler cho ảnh
+        window.addEventListener('click', (event) => {
+            const canvas = renderer.domElement;
+            const rect = canvas.getBoundingClientRect();
+
+            // Tính toán mouse coordinates dựa trên vị trí của canvas
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(meshes);
+
+            if (intersects.length > 0) {
+                const clickedMesh = intersects[0].object;
+                openModal(clickedMesh.userData.imagePath);
+            }
+        });
+
+        // Modal functions
+        function openModal(imagePath) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImage');
+            img.src = imagePath;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // Đóng modal khi click bên ngoài ảnh
+        document.getElementById('imageModal').addEventListener('click', (event) => {
+            if (event.target.id === 'imageModal') {
+                closeModal();
+            }
+        });
+
+        // VIDEO SLIDER
+        let currentIndex = 0;
+        const slider = document.getElementById("videoSlider");
+        let totalVideos = 0;
+
+        // Tải danh sách video từ manifest.json
+        fetch('vid/manifest.json')
+            .then(response => response.json())
+            .then(data => {
+                const videos = data.videos;
+                totalVideos = videos.length;
+
+                // Tạo các thẻ video động
+                videos.forEach((videoPath, index) => {
+                    const video = document.createElement('video');
+                    video.src = videoPath;
+                    video.controls = true;
+                    // Thêm class active cho video đầu tiên
+                    if (index === 0) {
+                        video.classList.add('active');
+                    }
+                    slider.appendChild(video);
+                });
+            })
+            .catch(error => console.error('Lỗi tải video:', error));
+
+        function updateSlide() {
+            const videos = slider.querySelectorAll('video');
+            videos.forEach((video, index) => {
+                if (index === currentIndex) {
+                    video.classList.add('active');
+                    video.currentTime = 0; // Reset video về đầu
+                    video.play(); // Chạy video
+                } else {
+                    video.classList.remove('active');
+                    video.pause(); // Dừng video
+                    video.currentTime = 0; // Reset video về đầu
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (totalVideos > 0) {
+                currentIndex = (currentIndex + 1) % totalVideos;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (totalVideos > 0) {
+                currentIndex = (currentIndex - 1 + totalVideos) % totalVideos;
+                updateSlide();
+            }
+        }
+
+        window.addEventListener("resize", () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        // ===== Random Floating Wishes =====
+        // ===== Floating Wishes Around Page =====
+        const wishes = [
+            "Chúc em một tuổi mới vui nhiều hơn nghĩ.",
+            "Mong mọi điều tốt đẹp tìm đến em đúng lúc.",
+            "Cứ bình an thôi, những thứ còn lại để anh lo.",
+            "Tuổi mới rồi, cứ mạnh dạn mơ lớn hơn một chút.",
+            "Nếu có ngày mệt, nhớ là vẫn có anh.",
+            "Hy vọng năm nay sẽ dịu dàng với em hơn.",
+            "Cứ cười như vậy là đủ rồi.",
+            "Mong em luôn gặp được điều tử tế.",
+            "Thêm một tuổi, thêm nhiều cơ hội đẹp.",
+            "Chỉ cần em vui, là anh thấy ổn.",
+            "Tuổi mới, ít lo hơn – nhiều cười hơn.",
+            "Có anh ở đây, không cần vội lớn.",
+            "Hôm nay là của em, tận hưởng đi nhé.",
+            "Hy vọng năm sau mình vẫn ngồi cạnh nhau thế này."
+        ];
+
+        // Fisher–Yates shuffle
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        shuffle(wishes);
+
+        let currentIndex1 = 0;
+
+        function getNextWish() {
+            if (currentIndex1 >= wishes.length) {
+                shuffle(wishes); // hết thì shuffle lại
+                currentIndex1 = 0;
+            }
+            return wishes[currentIndex1++];
+        }
+
+
+        function createFloatingWish() {
+            const wish = document.createElement("div");
+            wish.className = "floating-wish";
+            wish.innerText = getNextWish();
+
+
+            wish.style.left = Math.random() * 100 + "vw";
+            wish.style.fontSize = 14 + Math.random() * 10 + "px";
+
+            document.body.appendChild(wish);
+
+            setTimeout(() => {
+                wish.remove();
+            }, 6000);
+        }
+
+        setInterval(createFloatingWish, 1200);
+
+
+    </script>
+
+</body>
+
+</html>
