@@ -489,6 +489,7 @@
             .then(response => response.json())
             .then(data => {
                 const imagePaths = data.images;
+                shuffle(imagePaths);
 
                 imagePaths.forEach((path, i) => {
                     const texture = loader.load(path, function(texture) {
@@ -608,6 +609,7 @@
             .then(response => response.json())
             .then(data => {
                 const videos = data.videos;
+                shuffle(videos);
                 totalVideos = videos.length;
 
 
