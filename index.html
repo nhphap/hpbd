@@ -286,6 +286,7 @@
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
@@ -350,6 +351,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -360,6 +362,7 @@
                 transform: translateY(-50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -381,10 +384,11 @@
 
     <div id="cakeDialog">
         <div class="cake-container">
-            <h2 style="color: #ff79c6; font-size: 30px; margin-bottom: 20px;">🎂 Thổi nến sinh nhật nào! 🎂</h2>
+            <h2 style="color: #ff79c6; font-size: 30px; margin-bottom: 20px;">🎂 Thổi nến sinh nhật đi béeee ❤️ 🎂</h2>
             <div style="position: relative; width: 500px; height: 500px;">
                 <img id="cakeImage1" class="cake-image" src="img/cake1.png" alt="Cake 1" style="z-index: 2;">
-                <img id="cakeImage2" class="cake-image" src="img/cake2.png" alt="Cake 2" style="display: none; z-index: 1;">
+                <img id="cakeImage2" class="cake-image" src="img/cake2.png" alt="Cake 2"
+                    style="display: none; z-index: 1;">
             </div>
             <button id="blowButton" class="blow-button" onclick="blowCandles()">🎉 Thổi nến 🎉</button>
         </div>
@@ -397,9 +401,9 @@
 
     <div id="three-container"></div>
     <div class="message-section">
-        <h2>💌 Gửi em...</h2>
+        <h2>💌 Gửi bé...</h2>
         <p>
-            Chúc cô gái của anh thêm một tuổi mới thật rực rỡ.
+            Chúc em bé của anh thêm một tuổi mới thật rực rỡ.
             Hy vọng những ngày phía trước anh vẫn được quyền nắm tay em, được nhìn em cười và được ở cạnh em trong những
             khoảnh khắc quan trọng nhất. ❤️
         </p>
@@ -492,19 +496,19 @@
                 shuffle(imagePaths);
 
                 imagePaths.forEach((path, i) => {
-                    const texture = loader.load(path, function(texture) {
+                    const texture = loader.load(path, function (texture) {
                         const image = texture.image;
                         const aspectRatio = image.width / image.height;
-                        
+
 
                         const baseHeight = 2;
                         const baseWidth = baseHeight * aspectRatio;
-                        
+
                         const newGeometry = new THREE.PlaneGeometry(baseWidth, baseHeight);
                         mesh.geometry.dispose();
                         mesh.geometry = newGeometry;
                     });
-                    
+
                     const material = new THREE.MeshBasicMaterial({
                         map: texture,
                         side: THREE.DoubleSide
@@ -660,20 +664,29 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
         });
         const wishes = [
-            "Chúc em một tuổi mới vui nhiều hơn nghĩ.",
+            "Chúc bé iuu một tuổi mới vui nhiều hơn nghĩ.",
             "Mong mọi điều tốt đẹp tìm đến em đúng lúc.",
-            "Cứ bình an thôi, những thứ còn lại để anh lo.",
-            "Tuổi mới rồi, cứ mạnh dạn mơ lớn hơn một chút.",
-            "Nếu có ngày mệt, nhớ là vẫn có anh.",
-            "Hy vọng năm nay sẽ dịu dàng với em hơn.",
-            "Cứ cười như vậy là đủ rồi.",
-            "Mong em luôn gặp được điều tử tế.",
-            "Thêm một tuổi, thêm nhiều cơ hội đẹp.",
-            "Chỉ cần em vui, là anh thấy ổn.",
-            "Tuổi mới, ít lo hơn – nhiều cười hơn.",
-            "Có anh ở đây, không cần vội lớn.",
-            "Hôm nay là của em, tận hưởng đi nhé.",
-            "Hy vọng năm sau mình vẫn ngồi cạnh nhau thế này."
+            "Cứ bình an thôi, những thứ còn lại để anh lo cho bé.",
+            "Tuổi mới rồi, bé cứ mạnh dạn mơ lớn hơn một chút.",
+            "Nếu có ngày mệt, nhớ là vẫn có anh bên bé nhaaa.",
+            "Hy vọng năm nay sẽ dịu dàng với bé hơn.",
+            "Bé cứ cười như vậy là đủ rồi.",
+            "Mong bé luôn gặp được điều tử tế.",
+            "Thêm một tuổi, thêm nhiều cơ hội đẹp cho bé.",
+            "Chỉ cần bé vui, là anh thấy ổn.",
+            "Tuổi mới, bé ít lo hơn – nhiều cười hơn.",
+            "Có anh ở đây, bé không cần vội lớn.",
+            "Hôm nay là của em bé, tận hưởng đi nhé.",
+            "Hy vọng năm sau mình vẫn ngồi cạnh nhau thế này.",
+            "Chúc bé lúc nào cũng ngủ ngon và bớt suy nghĩ.",
+            "Tuổi mới rồi, em bé cứ vô tư thêm chút nữa.",
+            "Có chuyện gì khó quá thì để anh lo cho bé.",
+            "Chỉ cần em bé cười là anh đủ vui cả ngày.",
+            "Mong bé luôn gặp những điều nhẹ nhàng.",
+            "Lớn thêm một tuổi nhưng vẫn là bé của anh nhé.",
+            "Nếu bé mệt, anh ở đây rồi.",
+            "Chúc em bé một năm ít áp lực hơn.",
+            "Cảm ơn em bé đã đến trong cuộc đời anh."
         ];
 
         function shuffle(array) {
@@ -718,11 +731,11 @@
             const cakeImage1 = document.getElementById('cakeImage1');
             const cakeImage2 = document.getElementById('cakeImage2');
             const blowButton = document.getElementById('blowButton');
-            
+
             cakeImage1.style.display = 'none';
             cakeImage2.style.display = 'block';
             blowButton.style.visibility = 'hidden';
-            
+
             setTimeout(() => {
                 closeCakeDialog();
             }, 3000);
@@ -736,21 +749,21 @@
         function createTwinkleStar() {
             const star = document.createElement("div");
             star.className = "star twinkling";
-            
+
             function repositionStar() {
                 star.style.left = Math.random() * 100 + "vw";
                 star.style.top = Math.random() * 100 + "vh";
             }
-            
+
             repositionStar();
-            
+
             const duration = (Math.random() * 1.5 + 1) + "s";
             star.style.setProperty("--duration", duration);
-            
+
             star.style.animationDelay = Math.random() * 2 + "s";
-            
+
             document.body.appendChild(star);
-            
+
             setInterval(repositionStar, 3000);
         }
 
